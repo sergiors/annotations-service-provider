@@ -1,0 +1,23 @@
+{
+  "name": "inbep/annotation-reader-service-provider",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sérgio Rafael Siqueira",
+      "email": "sergio@inbep.com.br"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Inbep\\Silex\\": "src"
+    }
+  },
+  "require": {
+    "silex/silex": "^1.3",
+    "doctrine/annotations": "^1.2",
+    "doctrine/cache": "^1.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4.8"
+  }
+}
