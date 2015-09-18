@@ -27,22 +27,25 @@ class AnnotationServiceProvider implements ServiceProviderInterface
 
         $app['annotations.cached_reader.default'] = $app->share(function (Application $app) {
             $type = $app['annotations.cache_type'];
-            $types = [
-                'filesystem' => $app['annotations.cached_reader.filesystem'],
-                'apc' => $app['annotations.cached_reader.apc'],
-                'xcache' => $app['annotations.cached_reader.xcache']
-            ];
 
-            if (isset($types[$type])) {
-                return $types[$type];
+            if ('filesystem' === $type) {
+                return $app['annotations.cached_reader.filesystem'];
+            }
+
+            if ('apc' === $type) {
+                return $app['annotations.cached_reader.apc'];
+            }
+            
+            if ('xcache' === $type) {
+                return $app['annotations.cached_reader.xcache'];
             }
 
             return new ArrayCache();
         });
 
         $app['annotations.cached_reader.filesystem'] = $app->share(function (Application $app) {
-            if (!$app['annotations.cache_dir']) {
-                throw new \InvalidArgumentException('The parameter \'annotations.cache_dir\' cannot be empty.');
+            if (!is_dir($app['annotations.cache_dir'])) {
+                throw new \InvalidArgumentException('The parameter "annotations.cache_dir" must be a directory.');
             }
 
             return new FilesystemCache($app['annotations.cache_dir']);
