@@ -1,15 +1,10 @@
 <?php
-namespace Inbep\Silex\Provider;
+namespace Sergiors\Silex\Provider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\CachedReader;
-use Doctrine\Common\Cache\FilesystemCache;
-use Doctrine\Common\Cache\ArrayCache;
-use Doctrine\Common\Cache\RedisCache;
-use Doctrine\Common\Cache\ApcCache;
-use Doctrine\Common\Cache\XcacheCache;
+use Doctrine\Common\Annotations\AnnotationReader;
 
 /**
  * @author Sérgio Rafael Siqueira <sergio@inbep.com.br>
@@ -29,64 +24,13 @@ class AnnotationServiceProvider implements ServiceProviderInterface
         });
 
         $app['annotations.cached_reader.factory'] = $app->protect(function ($options) use ($app) {
-            switch ($options['cache_driver']) {
-                case 'array':
-                    return $app['annotations.cached_reader.array']();
-                    break;
-                case 'filesystem':
-                    return $app['annotations.cached_reader.filesystem']($options);
-                    break;
-                case 'apc':
-                    return $app['annotations.cached_reader.apc']();
-                    break;
-                case 'xcache':
-                    return $app['annotations.cached_reader.xcache']();
-                    break;
-                case 'redis':
-                    return $app['annotations.cached_reader.redis']($options);
-                    break;
-            }
-
-            throw new \RuntimeException();
-        });
-
-        $app['annotations.cached_reader.filesystem'] = $app->protect(function ($options) {
-            if (empty($options['cache_dir']) || !is_dir($options['cache_dir'])) {
-                throw new \RuntimeException(
-                    'You must specify "cache_dir" for Filesystem.'
+            if (!isset($app['cache'])) {
+                throw new \LogicException(
+                    'You must register the DoctrineCacheServiceProvider to use the AnnotationServiceProvider.'
                 );
             }
 
-            return new FilesystemCache($options['cache_dir']);
-        });
-
-        $app['annotations.cached_reader.apc'] = $app->protect(function () {
-            return new ApcCache();
-        });
-
-        $app['annotations.cached_reader.xcache'] = $app->protect(function () {
-            return new XcacheCache();
-        });
-
-        $app['annotations.cached_reader.array'] = $app->protect(function () {
-            return new ArrayCache();
-        });
-
-        $app['annotations.cached_reader.redis'] = $app->protect(function ($options) {
-            if (empty($options['host']) || empty($options['port'])) {
-                throw new \RuntimeException('You must specify "host" and "port" for Redis.');
-            }
-
-            $redis = new \Redis();
-            $redis->connect($options['host'], $options['port']);
-
-            if (isset($options['password'])) {
-                $redis->auth($options['password']);
-            }
-
-            $cache = new RedisCache();
-            $cache->setRedis($redis);
-            return $cache;
+            return $app['cache.factory']($options['cache_driver'], $options);
         });
 
         $app['annotations.cached_reader'] = $app->share(function (Application $app) {

@@ -1,7 +1,7 @@
 Install
 -------
 ```
-composer require inbep/annotation-service-provider
+composer require sergiors/annotation-service-provider "dev-master"
 ```
 
 License
