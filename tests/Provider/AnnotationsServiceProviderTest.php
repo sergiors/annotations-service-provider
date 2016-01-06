@@ -6,7 +6,7 @@ use Silex\WebTestCase;
 use Doctrine\Common\Annotations\CachedReader;
 use Doctrine\Common\Annotations\AnnotationReader;
 
-class AnnotationServiceProviderTest extends WebTestCase
+class AnnotationsServiceProviderTest extends WebTestCase
 {
     /**
      * @test
@@ -15,7 +15,7 @@ class AnnotationServiceProviderTest extends WebTestCase
     {
         $app = $this->createApplication();
         $app->register(new DoctrineCacheServiceProvider());
-        $app->register(new AnnotationServiceProvider());
+        $app->register(new AnnotationsServiceProvider());
 
         $this->assertInstanceOf(AnnotationReader::class, $app['annotations.reader']);
         $this->assertInstanceOf(CachedReader::class, $app['annotation_reader']);

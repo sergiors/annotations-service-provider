@@ -9,7 +9,7 @@ use Doctrine\Common\Annotations\AnnotationReader;
 /**
  * @author Sérgio Rafael Siqueira <sergio@inbep.com.br>
  */
-class AnnotationServiceProvider implements ServiceProviderInterface
+class AnnotationsServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {

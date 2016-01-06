@@ -1,5 +1,6 @@
 {
-  "name": "sergiors/annotation-service-provider",
+  "name": "sergiors/annotations-service-provider",
+  "description": "Doctrine Annotations for Silex",
   "license": "MIT",
   "authors": [
     {

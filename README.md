@@ -1,7 +1,7 @@
 Install
 -------
 ```
-composer require sergiors/annotation-service-provider "dev-master"
+composer require sergiors/annotations-service-provider "dev-master"
 ```
 
 License
