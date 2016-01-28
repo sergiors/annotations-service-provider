@@ -1,8 +1,11 @@
 <?php
-namespace Sergiors\Silex\Provider;
+
+namespace Sergiors\Silex\Tests\Provider;
 
 use Silex\Application;
 use Silex\WebTestCase;
+use Sergiors\Silex\Provider\DoctrineCacheServiceProvider;
+use Sergiors\Silex\Provider\AnnotationsServiceProvider;
 use Doctrine\Common\Annotations\CachedReader;
 use Doctrine\Common\Annotations\AnnotationReader;
 
@@ -26,6 +29,7 @@ class AnnotationsServiceProviderTest extends WebTestCase
         $app = new Application();
         $app['debug'] = true;
         $app['exception_handler']->disable();
+
         return $app;
     }
 }

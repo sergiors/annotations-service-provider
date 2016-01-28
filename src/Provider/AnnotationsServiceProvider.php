@@ -1,4 +1,5 @@
 <?php
+
 namespace Sergiors\Silex\Provider;
 
 use Silex\Application;
@@ -16,7 +17,7 @@ class AnnotationsServiceProvider implements ServiceProviderInterface
         $app['annotations.debug'] = false;
         $app['annotations.options'] = [
             'cache_driver' => 'array',
-            'cache_dir' => null
+            'cache_dir' => null,
         ];
 
         $app['annotations.reader'] = $app->share(function () {
