@@ -20,8 +20,8 @@ class AnnotationsServiceProviderTest extends WebTestCase
         $app->register(new DoctrineCacheServiceProvider());
         $app->register(new AnnotationsServiceProvider());
 
-        $this->assertInstanceOf(AnnotationReader::class, $app['annotations.reader']);
-        $this->assertInstanceOf(CachedReader::class, $app['annotation_reader']);
+        $this->assertInstanceOf(AnnotationReader::class, $app['annotation_reader']);
+        $this->assertInstanceOf(CachedReader::class, $app['annotations']);
     }
 
     public function createApplication()
