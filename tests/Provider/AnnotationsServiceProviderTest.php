@@ -2,14 +2,13 @@
 
 namespace Sergiors\Silex\Tests\Provider;
 
-use Silex\Application;
-use Silex\WebTestCase;
+use Pimple\Container;
 use Sergiors\Silex\Provider\DoctrineCacheServiceProvider;
 use Sergiors\Silex\Provider\AnnotationsServiceProvider;
 use Doctrine\Common\Annotations\CachedReader;
 use Doctrine\Common\Annotations\AnnotationReader;
 
-class AnnotationsServiceProviderTest extends WebTestCase
+class AnnotationsServiceProviderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -26,10 +25,6 @@ class AnnotationsServiceProviderTest extends WebTestCase
 
     public function createApplication()
     {
-        $app = new Application();
-        $app['debug'] = true;
-        $app['exception_handler']->disable();
-
-        return $app;
+        return new Container();
     }
 }

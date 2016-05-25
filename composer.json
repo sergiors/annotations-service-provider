@@ -9,9 +9,9 @@
         }
     ],
     "require": {
-        "silex/silex": "~1.3",
         "doctrine/annotations": "~1.2",
-        "sergiors/doctrine-cache-service-provider": "~1.0"
+        "sergiors/doctrine-cache-service-provider": "^2",
+        "pimple/pimple": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.8",
