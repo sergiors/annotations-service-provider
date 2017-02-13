@@ -25,7 +25,7 @@ class AnnotationsServiceProvider implements ServiceProviderInterface
                 );
             }
 
-            return $app['cache.factory']($options['cache_driver'], $options);
+            return $app['cache_factory']($options['cache_driver'], $options);
         });
 
         $app['annotations.cached_reader'] = function () use ($app) {
