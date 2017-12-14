@@ -1,10 +1,10 @@
 <?php
 
-namespace Sergiors\Silex\Tests\Provider;
+namespace Sergiors\Pimple\Tests\Provider;
 
 use Pimple\Container;
-use Sergiors\Silex\Provider\DoctrineCacheServiceProvider;
-use Sergiors\Silex\Provider\AnnotationsServiceProvider;
+use Sergiors\Pimple\Provider\DoctrineCacheServiceProvider;
+use Sergiors\Pimple\Provider\AnnotationsServiceProvider;
 use Doctrine\Common\Annotations\CachedReader;
 use Doctrine\Common\Annotations\AnnotationReader;
 
@@ -15,16 +15,11 @@ class AnnotationsServiceProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function register()
     {
-        $app = $this->createApplication();
-        $app->register(new DoctrineCacheServiceProvider());
-        $app->register(new AnnotationsServiceProvider());
+        $container = new Container();
+        $container->register(new DoctrineCacheServiceProvider());
+        $container->register(new AnnotationsServiceProvider());
 
-        $this->assertInstanceOf(AnnotationReader::class, $app['annotation_reader']);
-        $this->assertInstanceOf(CachedReader::class, $app['annotations']);
-    }
-
-    public function createApplication()
-    {
-        return new Container();
+        $this->assertInstanceOf(AnnotationReader::class, $container['annotation_reader']);
+        $this->assertInstanceOf(CachedReader::class, $container['annotations']);
     }
 }

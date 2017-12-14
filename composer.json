@@ -10,7 +10,7 @@
     ],
     "require": {
         "doctrine/annotations": "~1.2",
-        "sergiors/doctrine-cache-service-provider": "^2",
+        "sergiors/doctrine-cache-service-provider": "^3",
         "pimple/pimple": "^3.0"
     },
     "require-dev": {
@@ -24,12 +24,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Sergiors\\Silex\\": "src"
+            "Sergiors\\Pimple\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Sergiors\\Silex\\Tests\\": "src/tests"
+            "Sergiors\\Pimple\\Tests\\": "src/tests"
         }
     }
 }

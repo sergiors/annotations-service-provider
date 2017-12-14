@@ -1,6 +1,6 @@
 <?php
 
-namespace Sergiors\Silex\Provider;
+namespace Sergiors\Pimple\Provider;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -12,38 +12,38 @@ use Doctrine\Common\Annotations\AnnotationReader;
  */
 class AnnotationsServiceProvider implements ServiceProviderInterface
 {
-    public function register(Container $app)
+    public function register(Container $container)
     {
-        $app['annotation_reader'] = function () use ($app) {
+        $container['annotations.debug'] = false;
+        $container['annotations.options'] = [
+            'cache_driver' => 'array',
+            'cache_dir'    => null,
+        ];
+
+        $container['annotation_reader'] = function () use ($container) {
             return new AnnotationReader();
         };
 
-        $app['annotations.cached_reader.factory'] = $app->protect(function ($options) use ($app) {
-            if (!isset($app['cache'])) {
+        $container['annotations.cached_reader.factory'] = $container->protect(function ($options) use ($container) {
+            if (!isset($container['cache'])) {
                 throw new \LogicException(
                     'You must register the DoctrineCacheServiceProvider to use the AnnotationServiceProvider.'
                 );
             }
 
-            return $app['cache_factory']($options['cache_driver'], $options);
+            return $container['cache_factory']($options['cache_driver'], $options);
         });
 
-        $app['annotations.cached_reader'] = function () use ($app) {
+        $container['annotations.cached_reader'] = function () use ($container) {
             return new CachedReader(
-                $app['annotation_reader'],
-                $app['annotations.cached_reader.factory']($app['annotations.options']),
-                $app['annotations.debug']
+                $container['annotation_reader'],
+                $container['annotations.cached_reader.factory']($container['annotations.options']),
+                $container['annotations.debug']
             );
         };
 
-        $app['annotations'] = function () use ($app) {
-            return $app['annotations.cached_reader'];
+        $container['annotations'] = function () use ($container) {
+            return $container['annotations.cached_reader'];
         };
-
-        $app['annotations.debug'] = false;
-        $app['annotations.options'] = [
-            'cache_driver' => 'array',
-            'cache_dir' => null,
-        ];
     }
 }
